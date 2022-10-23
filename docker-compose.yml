@@ -1,0 +1,70 @@
+version: "3.7"
+services:
+
+  app:
+    image: henriquerluz/php-fpm:1.0.0
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/php/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - ./docker-compose/php/php.ini:/usr/local/etc/php/php.ini
+    networks:
+      - rede
+
+  db:
+    build:
+      context: ./docker-compose/postgres
+      dockerfile: Dockerfile
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: controle-financeiro
+      POSTGRES_PASSWORD: controle-financeiro
+      POSTGRES_USER: controle-financeiro
+    volumes:
+      - ./docker-compose/postgres:/docker-entrypoint-initdb.d
+      - ./docker-compose/postgres/db-data:/var/lib/postgresql/data
+    networks:
+      - rede
+
+  apache:
+    build:
+      context: ./docker-compose/apache
+      dockerfile: Dockerfile
+    image: apache
+    depends_on:
+      - app
+    networks:
+      - rede
+    ports:
+      - "81:80"
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/apache/demo.apache.conf:/etc/apache2/sites-available/demo.apache.conf
+      - ./docker-compose/apache/apache.conf:/etc/apache2/apache.conf
+      #- ./docker-compose/apache/sources.list:/etc/apt/sources.list
+      - ./docker-compose/apache/ports.conf:/etc/apache2/ports.conf
+
+###> doctrine/doctrine-bundle ###
+  database:
+    image: postgres:${POSTGRES_VERSION:-14}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
+
+networks:
+  rede:
+    driver: bridge
+
+volumes:
+###> doctrine/doctrine-bundle ###
+  db-data:
+###< doctrine/doctrine-bundle ###
