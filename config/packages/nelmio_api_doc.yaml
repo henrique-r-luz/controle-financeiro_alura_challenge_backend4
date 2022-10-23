@@ -2,8 +2,54 @@ nelmio_api_doc:
     documentation:
         info:
             title: Controle Financeiro
-            description: Lista de todos o end-points disponíveis da aplicação
+            description: Lista de todos o endpoints disponíveis da aplicação
             version: 1.0.0
+
+        paths:
+            /api/receitas:
+                post:
+                    description: Cria uma nova receita
+                    tags:
+                        - Rotas
+                    requestBody:
+                        required: true
+                        content:
+                            text/plain:
+                                schema:
+                                    type: object
+                            
+                                examples:
+                                    dog:  # <--- example name
+                                        summary: Exemplo de uma receita
+                                        value:
+                                           # vv Actual payload goes here vv
+                                            descricao: Salário
+                                            valor: 10.58
+                                            data: '2022-10-18'
+                    responses:
+                        200:
+                            description: Receita Criada com sucesso
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            receita: {type: int, example: 1}
+                    
+                        500:
+                            description: Ocorreu um erro ao tentar inserir A Receita
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            erro: {type: string, example: mensagem de erro}
+                        
+        tags:
+            - name: Rotas
+
     areas: # to filter documented areas
         path_patterns:
             - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+
+    

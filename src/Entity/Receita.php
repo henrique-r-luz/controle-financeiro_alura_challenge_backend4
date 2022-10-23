@@ -2,10 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ReceitaRepository;
+use App\Helper\ArulaException;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ReceitaRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use App\Validacao\Receita\ValidaDescricaoMes;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
+#[HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ReceitaRepository::class)]
 class Receita
 {
@@ -22,6 +27,12 @@ class Receita
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $data = null;
+    public $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
 
     public function getId(): ?int
     {
@@ -35,7 +46,7 @@ class Receita
 
     public function setDescricao(string $descricao): self
     {
-        $this->descricao = $descricao;
+        $this->descricao = trim($descricao);
 
         return $this;
     }
@@ -62,5 +73,19 @@ class Receita
         $this->data = $data;
 
         return $this;
+    }
+
+    public function getMes()
+    {
+        return $this->data->format('m');
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function validate()
+    {
+
+        $validaDescricaoMes = new ValidaDescricaoMes($this);
+        $validaDescricaoMes->valida();
     }
 }
