@@ -20,7 +20,7 @@ class CriaReceitaController extends AbstractController
         ReceitaServices $receitaServices
     ): Response {
         try {
-            $dados = json_decode($request->getContent(), true);
+            $dados = $request->getContent();
             if ($dados == null) {
                 throw new ArulaException('O formato dos dados está incorreto.');
             }
@@ -28,9 +28,9 @@ class CriaReceitaController extends AbstractController
             $receitaServices->save();
             return new JsonResponse(['Receita' => 1]);
         } catch (\Exception $e) {
-            return new JsonResponse(['erro' => $e->getMessage()]);
+            return new JsonResponse(['erro' => $e->getMessage()], $status = 500);
         } catch (Throwable $e) {
-            return new JsonResponse(['erro' => 'Um erro inesperado Ocorreu.' . $e->getMessage()]);
+            return new JsonResponse(['erro' => 'Um erro inesperado Ocorreu.' . $e->getMessage()], $status = 500);
         }
     }
 }

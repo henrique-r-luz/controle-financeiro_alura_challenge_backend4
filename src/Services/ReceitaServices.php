@@ -3,10 +3,12 @@
 namespace App\Services;
 
 use DateTime;
+use KHerGe\JSON\JSON;
 use App\Entity\Receita;
 use App\Helper\ArulaException;
 use App\Repository\ReceitaRepository;
 use Doctrine\Persistence\ManagerRegistry;
+
 
 class ReceitaServices
 {
@@ -18,11 +20,6 @@ class ReceitaServices
     private Receita $receita;
     private ManagerRegistry $doctrine;
 
-    private $atributos = [
-        'descricao' => 'descricao',
-        'valor' => 'valor',
-        'data' => 'data'
-    ];
 
     public function __construct(ManagerRegistry $doctrine)
     {
@@ -31,30 +28,28 @@ class ReceitaServices
     }
 
 
-    public function load(array $dados)
+    public function load($jsonDados)
     {
-        $this->validaEntrada($dados);
+        $this->validaEntrada($jsonDados);
+        $dados = \json_decode($jsonDados, true);
         $this->receita->setDescricao($dados[self::descricao])
             ->setValor($dados[self::valor])
             ->setData(new DateTime($dados[self::data]));
     }
 
-    private function validaEntrada(array $dados)
+    private function validaEntrada($jsonDados)
     {
-        $atributosFaltando = array_diff_key($this->atributos, $dados);
-        if (!empty($atributosFaltando)) {
-            $itens = '';
-            $index = 0;
-            foreach ($atributosFaltando as $atributo => $atri) {
-                if ($index == 0) {
-                    $itens .= "'" . $atributo . "'";
-                } else {
-                    $itens .= ", '" . $atributo . "'";
-                }
-                $index++;
-            }
-            throw new  ArulaException("Os atributos " . $itens . " não foram enviados");
+        $json = new JSON();
+        $decoded = $json->decode($jsonDados);
+        $schema = $json->decodeFile(__DIR__ . '/../SchemasJson/receita_schema.json');
+        $erros = $json->validate(
+            $schema,
+            $decoded
+        );
+        if (!empty($erros)) {
+            throw new ArulaException(print_r($erros, true));
         }
+        return $decoded;
     }
 
     public function save()

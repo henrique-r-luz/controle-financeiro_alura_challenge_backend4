@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-09/schema#",
+    "type": "object",
+    "properties": {
+        "descricao": {
+            "type": "string"
+        },
+        "valor": {
+            "type": "number"
+        },
+        "data": {
+            "type": "string",
+            "format": "date"
+        }
+    },
+    "required": [
+        "descricao",
+        "valor",
+        "data"
+    ]
+}

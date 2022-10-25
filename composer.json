@@ -10,11 +10,15 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
+        "kherge/json": "^3",
         "nelmio/api-doc-bundle": "^4.10",
+        "opis/json-schema": "^2.3",
+        "oro/doctrine-extensions": "^2.0",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "6.1.*",
         "symfony/console": "6.1.*",
         "symfony/dotenv": "6.1.*",
+        "symfony/expression-language": "6.0.*",
         "symfony/finder": "6.1.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.1.*",
@@ -22,9 +26,7 @@
         "symfony/runtime": "6.1.*",
         "symfony/twig-bundle": "6.1.*",
         "symfony/yaml": "6.1.*",
-        "twig/twig": "^2.12|^3.0",
-        "symfony/expression-language": "6.0.*",
-        "oro/doctrine-extensions": "^2.0"
+        "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
         "symfony/maker-bundle": "^1.46"
