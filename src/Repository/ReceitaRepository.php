@@ -41,12 +41,16 @@ class ReceitaRepository extends ServiceEntityRepository
 
     public function searchDescricaoMes(Receita $receita)
     {
-        return $this->createQueryBuilder('receita')
+        $query  =  $this->createQueryBuilder('receita')
             ->andWhere('receita.descricao = :descricao')
             ->andWhere('MONTH(receita.data) = :mes')
             ->setParameter('descricao', $receita->getDescricao())
-            ->setParameter('mes', $receita->getMes())
-            ->getQuery()
+            ->setParameter('mes', $receita->getMes());
+        if ($receita->getId() != null) {
+            $query->andWhere('receita.id <> :id')
+                ->setParameter('id', $receita->getId());
+        }
+        return $query->getQuery()
             ->getResult();
     }
 

@@ -2,17 +2,15 @@
 
 namespace App\Entity;
 
-use App\Helper\ArulaException;
+use JsonSerializable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReceitaRepository;
-use Doctrine\Persistence\ManagerRegistry;
-use App\Validacao\Receita\ValidaDescricaoMes;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
 #[HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ReceitaRepository::class)]
-class Receita
+class Receita implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -27,12 +25,7 @@ class Receita
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $data = null;
-    public $doctrine;
 
-    public function __construct(ManagerRegistry $doctrine)
-    {
-        $this->doctrine = $doctrine;
-    }
 
     public function getId(): ?int
     {
@@ -68,6 +61,12 @@ class Receita
         return $this->data;
     }
 
+    public function getDataFormat()
+    {
+        //return date_format($thisdate, 'Y-m-d H:i:s');
+        return $this->data->format('Y-m-d');
+    }
+
     public function setData(\DateTimeInterface $data): self
     {
         $this->data = $data;
@@ -80,12 +79,13 @@ class Receita
         return $this->data->format('m');
     }
 
-    #[ORM\PrePersist]
-    #[ORM\PreUpdate]
-    public function validate()
+    public function jsonSerialize()
     {
-
-        $validaDescricaoMes = new ValidaDescricaoMes($this);
-        $validaDescricaoMes->valida();
+        return [
+            'id' => $this->getId(),
+            'descricao' => $this->getDescricao(),
+            'valor' => $this->getValor(),
+            'data' => $this->getDataFormat()
+        ];
     }
 }

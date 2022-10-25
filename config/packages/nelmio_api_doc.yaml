@@ -17,15 +17,15 @@ nelmio_api_doc:
                             text/plain:
                                 schema:
                                     type: object
-                            
+
                                 examples:
-                                    dog:  # <--- example name
+                                    dog: # <--- example name
                                         summary: Exemplo de uma receita
                                         value:
-                                           # vv Actual payload goes here vv
+                                            # vv Actual payload goes here vv
                                             descricao: Salário
                                             valor: 10.58
-                                            data: '2022-10-18'
+                                            data: "2022-10-18"
                     responses:
                         200:
                             description: Receita Criada com sucesso
@@ -34,8 +34,8 @@ nelmio_api_doc:
                                     schema:
                                         type: object
                                         properties:
-                                            receita: {type: int, example: 1}
-                    
+                                            receita: { type: int, example: 1 }
+
                         500:
                             description: Ocorreu um erro ao tentar inserir A Receita
                             content:
@@ -43,8 +43,99 @@ nelmio_api_doc:
                                     schema:
                                         type: object
                                         properties:
-                                            erro: {type: string, example: mensagem de erro}
-                        
+                                            erro:
+                                                {
+                                                    type: string,
+                                                    example: mensagem de erro,
+                                                }
+
+                get:
+                    description: Lista todas as receitas
+                    tags:
+                        - Rotas
+                    responses:
+                        200:
+                            description: Lista de receitas recuperadas com sucesso
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: integer
+                                                descricao:
+                                                    type: string
+                                                valor:
+                                                    type: number
+                                                data:
+                                                    type: string
+                                                    format: "date"
+
+                        500:
+                            description: Ocorreu um erro ao tentar inserir A Receita
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            erro:
+                                                {
+                                                    type: string,
+                                                    example: mensagem de erro,
+                                                }
+            /api/receitas/{id}:
+                get:
+                    description: "Busca uma receita"
+                    tags:
+                        - Rotas
+
+                    responses:
+                        200:
+                            description: Receita única
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            id:
+                                                type: integer
+                                            descricao:
+                                                type: string
+                                            valor:
+                                                type: number
+                                            data:
+                                                type: string
+                                                format: "date"
+                put:
+                    description: "Altera uma receita"
+                    tags:
+                        - Rotas
+                    requestBody:
+                        required: true
+                        content:
+                            text/plain:
+                                schema:
+                                    type: object
+
+                                examples:
+                                    dog: # <--- example name
+                                        summary: Exemplo de uma receita
+                                        value:
+                                            # vv Actual payload goes here vv
+                                            descricao: Salário
+                                            valor: 10.58
+                                            data: "2022-10-18"
+                    responses:
+                        200:
+                            description: Receita Alterada com sucesso
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            receita: { type: int, example: 1 }
         tags:
             - name: Rotas
 
@@ -52,4 +143,3 @@ nelmio_api_doc:
         path_patterns:
             - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
 
-    
