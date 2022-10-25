@@ -42,13 +42,10 @@ class ReceitaServices
         $json = new JSON();
         $decoded = $json->decode($jsonDados);
         $schema = $json->decodeFile(__DIR__ . '/../SchemasJson/receita_schema.json');
-        $erros = $json->validate(
+        $json->validate(
             $schema,
             $decoded
         );
-        if (!empty($erros)) {
-            throw new ArulaException(print_r($erros, true));
-        }
         return $decoded;
     }
 
