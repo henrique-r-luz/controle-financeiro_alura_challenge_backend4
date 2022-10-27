@@ -25,10 +25,7 @@ class LoadUpdate implements LoadInterface
         if (empty($receita)) {
             throw new ArulaException("Recita não existe");
         }
-        $receita->setDescricao($dados[ReceitaServices::descricao])
-            ->setValor($dados[ReceitaServices::valor])
-            ->setData(new DateTime($dados[ReceitaServices::data]));
-
-        return $receita;
+        $populaObjeto = new PopulaObjeto($receita, $dados);
+        return $populaObjeto->getEntidade();
     }
 }

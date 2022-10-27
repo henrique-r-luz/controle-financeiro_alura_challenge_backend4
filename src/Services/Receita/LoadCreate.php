@@ -22,9 +22,7 @@ class LoadCreate implements LoadInterface
         ValidaJson::valida($this->form->jsonDados, $schema);
         $dados = \json_decode($this->form->jsonDados, true);
         $receita = new Receita();
-        $receita->setDescricao($dados[ReceitaServices::descricao])
-            ->setValor($dados[ReceitaServices::valor])
-            ->setData(new DateTime($dados[ReceitaServices::data]));
-        return $receita;
+        $populaObjeto = new PopulaObjeto($receita, $dados);
+        return $populaObjeto->getEntidade();
     }
 }
