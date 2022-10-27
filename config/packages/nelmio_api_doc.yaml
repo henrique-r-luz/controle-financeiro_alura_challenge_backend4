@@ -136,6 +136,21 @@ nelmio_api_doc:
                                         type: object
                                         properties:
                                             receita: { type: int, example: 1 }
+
+                delete:
+                    description: "Remove uma receita"
+                    tags:
+                        - Rotas
+                    responses:
+                        200:
+                            description: Receita Removida com sucesso
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            receita: { type: int, example: 1 }
+
         tags:
             - name: Rotas
 

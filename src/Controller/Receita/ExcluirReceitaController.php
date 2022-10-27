@@ -6,29 +6,27 @@ use App\Entity\FormEntradaDados;
 use Throwable;
 use App\Helper\ArulaException;
 use App\Services\Receita\ReceitaServices;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class UpdateController extends AbstractController
+class ExcluirReceitaController extends AbstractController
 {
-    private const metodo = 'PUT';
 
+    private const metodo = 'DELETE';
     #[Route('/receitas/{id}', methods: [self::metodo])]
-    public function update(
-        Request $request,
+    public function delete(
         ReceitaServices $receitaServices,
         int $id
-    ): Response {
+    ) {
         try {
             $form = new FormEntradaDados();
             $form->tipo = self::metodo;
-            $form->jsonDados = $request->getContent();
             $form->id = $id;
             $receitaServices->load($form);
-            $receitaServices->save();
+            $receitaServices->delete();
             return new JsonResponse(['Receita' => 1]);
         } catch (\Exception $e) {
             return new JsonResponse(['erro' => $e->getMessage()], $status = 500);
