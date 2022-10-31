@@ -63,4 +63,9 @@ class Despesas
 
         return $this;
     }
+
+    public function getMes()
+    {
+        return $this->data->format('m');
+    }
 }

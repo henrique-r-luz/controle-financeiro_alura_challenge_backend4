@@ -2,11 +2,9 @@
 
 namespace App\Services\Receita;
 
-use App\Entity\FormEntradaDados;
-use DateTime;
-use KHerGe\JSON\JSON;
 use App\Entity\Receita;
-use App\Helper\ArulaException;
+use App\Services\LoadFactory;
+use App\Entity\FormEntradaDados;
 use App\Repository\ReceitaRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Validacao\Receita\ValidaReceitaFachada;
@@ -15,9 +13,6 @@ use App\Validacao\Receita\ValidaReceitaFachada;
 class ReceitaServices
 {
 
-    const descricao = 'descricao';
-    const valor = 'valor';
-    const data = 'data';
 
     private Receita $receita;
     private ManagerRegistry $doctrine;
@@ -38,10 +33,10 @@ class ReceitaServices
         $form->repositorio = $this->repositorio;
         /**@var LoadInterface */
         $load = LoadFactory::getObject($form);
-        $this->receita = $load->getReceita();
+        $this->receita = $load->getEntidade();
     }
 
-    
+
 
     public function save()
     {

@@ -4,7 +4,7 @@ namespace App\Controller\Receita;
 
 use App\Entity\FormEntradaDados;
 use Throwable;
-use App\Helper\ArulaException;
+use App\Helper\Metodo;
 use App\Services\Receita\ReceitaServices;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,9 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UpdateController extends AbstractController
 {
-    private const metodo = 'PUT';
 
-    #[Route('/receitas/{id}', methods: [self::metodo])]
+    #[Route('/receitas/{id}', methods: [Metodo::put])]
     public function update(
         Request $request,
         ReceitaServices $receitaServices,
@@ -24,7 +23,7 @@ class UpdateController extends AbstractController
     ): Response {
         try {
             $form = new FormEntradaDados();
-            $form->tipo = self::metodo;
+            $form->tipo = Metodo::put;
             $form->jsonDados = $request->getContent();
             $form->id = $id;
             $receitaServices->load($form);

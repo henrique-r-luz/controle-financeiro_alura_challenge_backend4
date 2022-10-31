@@ -10,7 +10,7 @@ nelmio_api_doc:
                 post:
                     description: Cria uma nova receita
                     tags:
-                        - Rotas
+                        - Receitas
                     requestBody:
                         required: true
                         content:
@@ -52,7 +52,7 @@ nelmio_api_doc:
                 get:
                     description: Lista todas as receitas
                     tags:
-                        - Rotas
+                        - Receitas
                     responses:
                         200:
                             description: Lista de receitas recuperadas com sucesso
@@ -89,7 +89,7 @@ nelmio_api_doc:
                 get:
                     description: "Busca uma receita"
                     tags:
-                        - Rotas
+                        - Receitas
 
                     responses:
                         200:
@@ -111,7 +111,7 @@ nelmio_api_doc:
                 put:
                     description: "Altera uma receita"
                     tags:
-                        - Rotas
+                        - Receitas
                     requestBody:
                         required: true
                         content:
@@ -140,7 +140,7 @@ nelmio_api_doc:
                 delete:
                     description: "Remove uma receita"
                     tags:
-                        - Rotas
+                        - Receitas
                     responses:
                         200:
                             description: Receita Removida com sucesso
@@ -150,9 +150,38 @@ nelmio_api_doc:
                                         type: object
                                         properties:
                                             receita: { type: int, example: 1 }
+            /api/despesas:
+                post:
+                    description: Cria uma nova Despesa
+                    tags:
+                        - Despesas
+                    requestBody:
+                        required: true
+                        content:
+                            text/plain:
+                                schema:
+                                    type: object
 
+                                examples:
+                                    dog: # <--- example name
+                                        summary: Exemplo de uma  Despesa
+                                        value:
+                                            # vv Actual payload goes here vv
+                                            descricao: Conta
+                                            valor: 10.58
+                                            data: "2022-10-18"
+                    responses:
+                        200:
+                            description: Despesa Criada com sucesso
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            receita: { type: int, example: 1 }
         tags:
-            - name: Rotas
+            - name: Receitas
+            - name: Despesas
 
     areas: # to filter documented areas
         path_patterns:

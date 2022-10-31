@@ -3,6 +3,7 @@
 namespace App\Controller\Receita;
 
 use App\Entity\Receita;
+use App\Helper\Metodo;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,7 +12,7 @@ use Throwable;
 
 class ListaReceitasController extends AbstractController
 {
-    #[Route('/receitas', name: 'app_receitas_lista', methods: ['GET'])]
+    #[Route('/receitas', name: 'app_receitas_lista', methods: [Metodo::get])]
     public function lista(ManagerRegistry $doctrine)
     {
         try {
@@ -23,7 +24,7 @@ class ListaReceitasController extends AbstractController
     }
 
 
-    #[Route('/receitas/{id}', methods: ['GET'])]
+    #[Route('/receitas/{id}', methods: [Metodo::get])]
     public function listaOne(ManagerRegistry $doctrine, int $id)
     {
         try {

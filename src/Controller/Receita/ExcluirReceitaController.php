@@ -2,9 +2,10 @@
 
 namespace App\Controller\Receita;
 
-use App\Entity\FormEntradaDados;
 use Throwable;
+use App\Helper\Metodo;
 use App\Helper\ArulaException;
+use App\Entity\FormEntradaDados;
 use App\Services\Receita\ReceitaServices;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,15 +16,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ExcluirReceitaController extends AbstractController
 {
 
-    private const metodo = 'DELETE';
-    #[Route('/receitas/{id}', methods: [self::metodo])]
+    #[Route('/receitas/{id}', methods: [Metodo::delete])]
     public function delete(
         ReceitaServices $receitaServices,
         int $id
     ) {
         try {
             $form = new FormEntradaDados();
-            $form->tipo = self::metodo;
+            $form->tipo = Metodo::delete;
             $form->id = $id;
             $receitaServices->load($form);
             $receitaServices->delete();

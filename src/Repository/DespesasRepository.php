@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Despesas;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Validacao\DescricaoMesInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Despesas>
@@ -14,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Despesas[]    findAll()
  * @method Despesas[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DespesasRepository extends ServiceEntityRepository
+class DespesasRepository extends ServiceEntityRepository implements DescricaoMesInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -39,28 +40,43 @@ class DespesasRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Despesas[] Returns an array of Despesas objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('d.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function searchDescricaoMes($despesa)
+    {
+        $query  =  $this->createQueryBuilder('despesa')
+            ->andWhere('despesa.descricao = :descricao')
+            ->andWhere('MONTH(despesa.data) = :mes')
+            ->setParameter('descricao', $despesa->getDescricao())
+            ->setParameter('mes', $despesa->getMes());
+        if ($despesa->getId() != null) {
+            $query->andWhere('receita.id <> :id')
+                ->setParameter('id', $despesa->getId());
+        }
+        return $query->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Despesas
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Despesas[] Returns an array of Despesas objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('d')
+    //            ->andWhere('d.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('d.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Despesas
+    //    {
+    //        return $this->createQueryBuilder('d')
+    //            ->andWhere('d.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

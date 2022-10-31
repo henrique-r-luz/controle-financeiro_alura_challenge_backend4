@@ -11,9 +11,9 @@ class ValidaDescricaoMes implements ValidaInterface
 {
 
     private $receita;
-    private ReceitaRepository $repositorio;
+    private $repositorio;
 
-    public function __construct(ReceitaRepository $repositorio, Receita $receita)
+    public function __construct($repositorio, $receita)
     {
         $this->receita = $receita;
         $this->repositorio = $repositorio;

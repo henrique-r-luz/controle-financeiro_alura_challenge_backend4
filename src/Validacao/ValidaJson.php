@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validacao\Receita;
+namespace App\Validacao;
 
 use KHerGe\JSON\JSON;
 

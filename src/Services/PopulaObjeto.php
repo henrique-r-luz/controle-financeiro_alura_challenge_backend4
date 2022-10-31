@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Services\Receita;
+namespace App\Services;
 
 use DateTime;
 
 class PopulaObjeto
 {
+    const descricao = 'descricao';
+    const valor = 'valor';
+    const data = 'data';
 
     private $entidade;
     private $dados;
@@ -16,9 +19,9 @@ class PopulaObjeto
     }
     public function getEntidade()
     {
-        $this->entidade->setDescricao($this->dados[ReceitaServices::descricao])
-            ->setValor($this->dados[ReceitaServices::valor])
-            ->setData(new DateTime($this->dados[ReceitaServices::data]));
+        $this->entidade->setDescricao($this->dados[self::descricao])
+            ->setValor($this->dados[self::valor])
+            ->setData(new DateTime($this->dados[self::data]));
         return $this->entidade;
     }
 }

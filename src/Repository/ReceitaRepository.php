@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Receita;
+use App\Validacao\DescricaoMesInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -14,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Receita[]    findAll()
  * @method Receita[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ReceitaRepository extends ServiceEntityRepository
+class ReceitaRepository extends ServiceEntityRepository implements DescricaoMesInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -39,7 +40,7 @@ class ReceitaRepository extends ServiceEntityRepository
         }
     }
 
-    public function searchDescricaoMes(Receita $receita)
+    public function searchDescricaoMes($receita)
     {
         $query  =  $this->createQueryBuilder('receita')
             ->andWhere('receita.descricao = :descricao')

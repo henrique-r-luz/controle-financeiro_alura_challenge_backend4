@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Receita;
+namespace App\Services;
 
 use DateTime;
 use App\Helper\ArulaException;
@@ -14,7 +14,7 @@ class LoadDelete implements LoadInterface
     {
         $this->form = $form;
     }
-    public function getReceita()
+    public function getEntidade()
     {
         $receita = $this->form->repositorio->findOneBy(['id' => $this->form->id]);
         if (empty($receita)) {

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReceitaRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class FormEntradaDados
 {
@@ -30,5 +31,19 @@ class FormEntradaDados
      */
     public ?string $tipo;
 
-    public ReceitaRepository $repositorio;
+    /**
+     * define o repositorio de qual entidade será 
+     * usada
+     * @var ServiceEntityRepository
+     * @author Henrique Luz
+     */
+    public ServiceEntityRepository $repositorio;
+
+    /**
+     * define a entidade que sera tratada
+     *
+     * @var [type]
+     * @author Henrique Luz
+     */
+    public $entidade;
 }
