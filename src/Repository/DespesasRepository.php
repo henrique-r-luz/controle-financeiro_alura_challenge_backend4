@@ -48,7 +48,7 @@ class DespesasRepository extends ServiceEntityRepository implements DescricaoMes
             ->setParameter('descricao', $despesa->getDescricao())
             ->setParameter('mes', $despesa->getMes());
         if ($despesa->getId() != null) {
-            $query->andWhere('receita.id <> :id')
+            $query->andWhere('despesa.id <> :id')
                 ->setParameter('id', $despesa->getId());
         }
         return $query->getQuery()

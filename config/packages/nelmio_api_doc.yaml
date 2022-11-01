@@ -179,6 +179,110 @@ nelmio_api_doc:
                                         type: object
                                         properties:
                                             receita: { type: int, example: 1 }
+
+                get:
+                    description: Lista todas as despesas
+                    tags:
+                        - Despesas
+                    responses:
+                        200:
+                            description: Lista de despesas recuperadas com sucesso
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: integer
+                                                descricao:
+                                                    type: string
+                                                valor:
+                                                    type: number
+                                                data:
+                                                    type: string
+                                                    format: "date"
+
+                        500:
+                            description: Ocorreu um erro ao tentar inserir a despesa
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            erro:
+                                                {
+                                                    type: string,
+                                                    example: mensagem de erro,
+                                                }
+
+            /api/despesas/{id}:
+                get:
+                    description: "Busca uma despesa"
+                    tags:
+                        - Despesas
+
+                    responses:
+                        200:
+                            description: despesa única
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            id:
+                                                type: integer
+                                            descricao:
+                                                type: string
+                                            valor:
+                                                type: number
+                                            data:
+                                                type: string
+                                                format: "date"
+                put:
+                    description: "Altera uma despesa"
+                    tags:
+                        - Despesas
+                    requestBody:
+                        required: true
+                        content:
+                            text/plain:
+                                schema:
+                                    type: object
+
+                                examples:
+                                    dog: # <--- example name
+                                        summary: Exemplo de uma despesa
+                                        value:
+                                            # vv Actual payload goes here vv
+                                            descricao: conra
+                                            valor: 50.58
+                                            data: "2022-10-18"
+                    responses:
+                        200:
+                            description: Despesa Alterada com sucesso
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            receita: { type: int, example: 1 }
+
+                delete:
+                    description: "Remove uma despesa"
+                    tags:
+                        - Receitas
+                    responses:
+                        200:
+                            description: despesa Removida com sucesso
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            receita: { type: int, example: 1 }
+
         tags:
             - name: Receitas
             - name: Despesas

@@ -32,6 +32,7 @@ class DespesasServices
     {
 
         $form->repositorio = $this->repositorio;
+        
         /**@var LoadInterface */
         $load = LoadFactory::getObject($form);
         $this->despesas = $load->getEntidade();

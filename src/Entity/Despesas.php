@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\DespesasRepository;
+use JsonSerializable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\DespesasRepository;
 
 #[ORM\Entity(repositoryClass: DespesasRepository::class)]
-class Despesas
+class Despesas implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,6 +23,9 @@ class Despesas
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $data = null;
+
+    #[ORM\ManyToOne(inversedBy: 'despesas')]
+    private ?Categoria $categoria = null;
 
     public function getId(): ?int
     {
@@ -67,5 +71,33 @@ class Despesas
     public function getMes()
     {
         return $this->data->format('m');
+    }
+
+    public function getDataFormat()
+    {
+        //return date_format($thisdate, 'Y-m-d H:i:s');
+        return $this->data->format('Y-m-d');
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'descricao' => $this->getDescricao(),
+            'valor' => $this->getValor(),
+            'data' => $this->getDataFormat()
+        ];
+    }
+
+    public function getCategoria(): ?Categoria
+    {
+        return $this->categoria;
+    }
+
+    public function setCategoria(?Categoria $categoria): self
+    {
+        $this->categoria = $categoria;
+
+        return $this;
     }
 }

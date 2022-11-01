@@ -23,7 +23,7 @@ class LoadUpdate implements LoadInterface
         $dados = $analisaJson->getDados();
         $entidade = $this->form->repositorio->findOneBy(['id' => $this->form->id]);
         if (empty($entidade)) {
-            throw new ArulaException("Recita não existe");
+            throw new ArulaException("Entidade não existe");
         }
         $populaObjeto = new PopulaObjeto($entidade, $dados);
         return $populaObjeto->getEntidade();
