@@ -55,6 +55,17 @@ class ReceitaRepository extends ServiceEntityRepository implements DescricaoMesI
             ->getResult();
     }
 
+
+    public function buscaReceitas(?string $descricao)
+    {
+        $query  =  $this->createQueryBuilder('receita');
+        if ($descricao !== null) {
+            $query->andWhere($query->expr()->like('receita.descricao', ':descricao'))
+                ->setParameter('descricao', '%' . $descricao . '%');
+        }
+        return $query->getQuery()->getResult();
+    }
+
     //    /**
     //     * @return Receita[] Returns an array of Receita objects
     //     */

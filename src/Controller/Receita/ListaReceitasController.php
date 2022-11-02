@@ -2,21 +2,27 @@
 
 namespace App\Controller\Receita;
 
-use App\Entity\Receita;
+use Throwable;
 use App\Helper\Metodo;
+use App\Entity\Receita;
+use App\Repository\ReceitaRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Throwable;
 
 class ListaReceitasController extends AbstractController
 {
-    #[Route('/receitas', name: 'app_receitas_lista', methods: [Metodo::get])]
-    public function lista(ManagerRegistry $doctrine)
-    {
+    #[Route('/receitas', methods: [Metodo::get])]
+    public function lista(
+        ManagerRegistry $doctrine,
+        Request $request
+    ) {
         try {
-            $receitas = $doctrine->getRepository(Receita::class)->findAll();
+            $descricao = $request->query->get('descricao') ?? null;
+            /** @var  ReceitaRepository */
+            $receitas = $doctrine->getRepository(Receita::class)->buscaReceitas($descricao); //$doctrine->getRepository(Receita::class)->findBy(['']);
             return new JsonResponse($receitas);
         } catch (Throwable $e) {
             return new JsonResponse(["erro" => "Um erro inesperado ocorreu!"], $status = 500);

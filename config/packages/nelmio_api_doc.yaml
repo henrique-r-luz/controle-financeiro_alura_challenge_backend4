@@ -53,6 +53,12 @@ nelmio_api_doc:
                     description: Lista todas as receitas
                     tags:
                         - Receitas
+                    parameters:
+                        - in: query
+                          name: descricao
+                          schema:
+                              type: string
+                          description: Pesquisa por descrição
                     responses:
                         200:
                             description: Lista de receitas recuperadas com sucesso
