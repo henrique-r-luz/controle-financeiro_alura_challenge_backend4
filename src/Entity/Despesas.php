@@ -85,7 +85,8 @@ class Despesas implements JsonSerializable
             'id' => $this->getId(),
             'descricao' => $this->getDescricao(),
             'valor' => $this->getValor(),
-            'data' => $this->getDataFormat()
+            'data' => $this->getDataFormat(),
+            'categoria' =>  isset($this->categoria) ? $this->categoria->getNome() : ''
         ];
     }
 

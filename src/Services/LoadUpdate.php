@@ -21,11 +21,11 @@ class LoadUpdate implements LoadInterface
 
         $analisaJson = new AnalisaJson($this->form);
         $dados = $analisaJson->getDados();
-        $entidade = $this->form->repositorio->findOneBy(['id' => $this->form->id]);
-        if (empty($entidade)) {
+        $this->form->entidade = $this->form->repositorio->findOneBy(['id' => $this->form->id]);
+        if (empty($this->form->entidade)) {
             throw new ArulaException("Entidade não existe");
         }
-        $populaObjeto = new PopulaObjeto($entidade, $dados);
+        $populaObjeto = new PopulaObjeto($this->form, $dados);
         return $populaObjeto->getEntidade();
     }
 }

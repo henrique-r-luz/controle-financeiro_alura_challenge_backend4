@@ -2,6 +2,7 @@
 
 namespace App\Controller\Despesa;
 
+use App\Entity\Despesas;
 use Throwable;
 use App\Helper\Metodo;
 use App\Entity\FormEntradaDados;
@@ -23,6 +24,7 @@ class UpdateController extends AbstractController
         try {
             $form = new FormEntradaDados();
             $form->tipo = Metodo::put;
+            $form->entidade = new Despesas();
             $form->jsonDados = $request->getContent();
             $form->id = $id;
             $despesasServices->load($form);

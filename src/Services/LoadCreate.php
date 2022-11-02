@@ -20,7 +20,7 @@ class LoadCreate implements LoadInterface
     {
         $analisaJson = new AnalisaJson($this->form);
         $dados = $analisaJson->getDados();
-        $populaObjeto = new PopulaObjeto($this->form->entidade, $dados);
+        $populaObjeto = new PopulaObjeto($this->form, $dados);
         return $populaObjeto->getEntidade();
     }
 }

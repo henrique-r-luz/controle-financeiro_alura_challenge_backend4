@@ -10,6 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CategoriaRepository::class)]
 class Categoria
 {
+    const Outras = 'Outras';
+
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -20,6 +23,7 @@ class Categoria
 
     #[ORM\OneToMany(mappedBy: 'categoria', targetEntity: Despesas::class)]
     private Collection $despesas;
+
 
     public function __construct()
     {

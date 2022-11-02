@@ -46,4 +46,11 @@ class FormEntradaDados
      * @author Henrique Luz
      */
     public $entidade;
+
+    /**
+     * define qual será o schema de validação do json
+     * @var string
+     * @author Henrique Luz
+     */
+    public string $schemaJson = '';
 }

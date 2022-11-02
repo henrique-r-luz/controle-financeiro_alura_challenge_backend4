@@ -2,26 +2,35 @@
 
 namespace App\Services;
 
+use App\Entity\Despesas;
+use App\Entity\Receita;
+use App\Helper\ArulaException;
+use App\Services\Despesas\SetEntidadeDespesas;
+use App\Services\Receita\SetEntidadeReceita;
 use DateTime;
 
 class PopulaObjeto
 {
-    const descricao = 'descricao';
-    const valor = 'valor';
-    const data = 'data';
 
-    private $entidade;
+    const categoria = 'categoria';
+
+    private $form;
     private $dados;
-    public function __construct($entidade, $dados)
+    public function __construct($form, $dados)
     {
-        $this->entidade = $entidade;
+        $this->form = $form;
         $this->dados = $dados;
     }
     public function getEntidade()
     {
-        $this->entidade->setDescricao($this->dados[self::descricao])
-            ->setValor($this->dados[self::valor])
-            ->setData(new DateTime($this->dados[self::data]));
-        return $this->entidade;
+        if ($this->form->entidade instanceof Receita) {
+            $entidade =  new SetEntidadeReceita($this->form, $this->dados);
+            return $entidade->set();
+        }
+        if ($this->form->entidade instanceof Despesas) {
+            $entidade =  new SetEntidadeDespesas($this->form, $this->dados);
+            return $entidade->set();
+        }
+        throw new ArulaException('Tipo de entidade para populae não foi encontrato');
     }
 }

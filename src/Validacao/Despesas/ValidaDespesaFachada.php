@@ -23,5 +23,7 @@ class ValidaDespesaFachada
     {
         $validaDescricaoMes = new ValidaDescricaoMes($this->repositorio, $this->despesa);
         $validaDescricaoMes->valida();
+        //$validaCategoria = new ValidaCategoria($this->repositorio, $this->despesa);
+        //$validaCategoria->valida();
     }
 }

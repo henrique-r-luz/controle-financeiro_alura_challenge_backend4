@@ -3,6 +3,7 @@
 namespace App\Controller\Receita;
 
 use App\Entity\FormEntradaDados;
+use App\Entity\Receita;
 use Throwable;
 use App\Helper\Metodo;
 use App\Services\Receita\ReceitaServices;
@@ -24,6 +25,7 @@ class UpdateController extends AbstractController
         try {
             $form = new FormEntradaDados();
             $form->tipo = Metodo::put;
+            $form->entidade = new Receita;
             $form->jsonDados = $request->getContent();
             $form->id = $id;
             $receitaServices->load($form);

@@ -11,6 +11,10 @@
         "data": {
             "type": "string",
             "format": "date"
+        },
+        "categoria": {
+            "type": "string",
+            "optional": true
         }
     },
     "required": [

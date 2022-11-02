@@ -32,7 +32,7 @@ class CriaDespesaController extends AbstractController
         } catch (\Exception $e) {
             return new JsonResponse(['erro' => $e->getMessage()], $status = 500);
         } catch (Throwable $e) {
-            return new JsonResponse(['erro' => 'Um erro inesperado Ocorreu.' . $e->getMessage()], $status = 500);
+            return new JsonResponse(['erro' => 'Um erro inesperado Ocorreu.' . $e->getTraceAsString()], $status = 500);
         }
     }
 }

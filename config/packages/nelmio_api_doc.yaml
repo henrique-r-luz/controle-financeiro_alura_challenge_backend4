@@ -170,6 +170,8 @@ nelmio_api_doc:
                                             descricao: Conta
                                             valor: 10.58
                                             data: "2022-10-18"
+                                            categoria: "Outras"
+
                     responses:
                         200:
                             description: Despesa Criada com sucesso
@@ -178,7 +180,7 @@ nelmio_api_doc:
                                     schema:
                                         type: object
                                         properties:
-                                            receita: { type: int, example: 1 }
+                                            despesa: { type: int, example: 1 }
 
                 get:
                     description: Lista todas as despesas
@@ -203,6 +205,8 @@ nelmio_api_doc:
                                                 data:
                                                     type: string
                                                     format: "date"
+                                                categoria:
+                                                    type: string
 
                         500:
                             description: Ocorreu um erro ao tentar inserir a despesa
@@ -240,6 +244,8 @@ nelmio_api_doc:
                                             data:
                                                 type: string
                                                 format: "date"
+                                            categoria:
+                                                type: string
                 put:
                     description: "Altera uma despesa"
                     tags:
@@ -259,6 +265,7 @@ nelmio_api_doc:
                                             descricao: conra
                                             valor: 50.58
                                             data: "2022-10-18"
+                                            categoria: "Outras"
                     responses:
                         200:
                             description: Despesa Alterada com sucesso
@@ -267,12 +274,12 @@ nelmio_api_doc:
                                     schema:
                                         type: object
                                         properties:
-                                            receita: { type: int, example: 1 }
+                                            despesa: { type: int, example: 1 }
 
                 delete:
                     description: "Remove uma despesa"
                     tags:
-                        - Receitas
+                        - Despesas
                     responses:
                         200:
                             description: despesa Removida com sucesso
@@ -281,7 +288,7 @@ nelmio_api_doc:
                                     schema:
                                         type: object
                                         properties:
-                                            receita: { type: int, example: 1 }
+                                            despesa: { type: int, example: 1 }
 
         tags:
             - name: Receitas

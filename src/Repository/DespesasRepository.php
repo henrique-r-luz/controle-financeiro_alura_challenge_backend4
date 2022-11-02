@@ -17,9 +17,12 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  */
 class DespesasRepository extends ServiceEntityRepository implements DescricaoMesInterface
 {
+    public ManagerRegistry $registry;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Despesas::class);
+        $this->registry = $registry;
     }
 
     public function save(Despesas $entity, bool $flush = false): void
