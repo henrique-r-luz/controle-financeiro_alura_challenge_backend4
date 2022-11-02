@@ -22,8 +22,8 @@ class ListaReceitasController extends AbstractController
         try {
             $descricao = $request->query->get('descricao') ?? null;
             /**@var  ReceitaRepository */
-            $receitas = $doctrine->getRepository(Receita::class);
-            $receitas->buscaReceitas($descricao); //$doctrine->getRepository(Receita::class)->findBy(['']);
+            $receitaRepositorio = $doctrine->getRepository(Receita::class);
+            $receitas = $receitaRepositorio->buscaReceitas($descricao);
             return new JsonResponse($receitas);
         } catch (Throwable $e) {
             return new JsonResponse(["erro" => "Um erro inesperado ocorreu!"], $status = 500);
