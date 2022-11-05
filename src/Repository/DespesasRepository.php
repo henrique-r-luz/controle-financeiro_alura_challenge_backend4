@@ -2,9 +2,14 @@
 
 namespace App\Repository;
 
+use App\Helper\Metodo;
 use App\Entity\Despesas;
+use App\Repository\helper\BuscaDados;
+use App\Repository\helper\BusacaAnoMes;
 use App\Validacao\DescricaoMesInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\helper\SomaValoresAnoMes;
+use App\Repository\helper\SearchDescricaoMes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
@@ -15,7 +20,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * @method Despesas[]    findAll()
  * @method Despesas[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class DespesasRepository extends ServiceEntityRepository implements DescricaoMesInterface
+class DespesasRepository extends ServiceEntityRepository implements DescricaoMesInterface, SearchInterface
 {
     public ManagerRegistry $registry;
 
@@ -45,41 +50,33 @@ class DespesasRepository extends ServiceEntityRepository implements DescricaoMes
 
     public function searchDescricaoMes($despesa)
     {
-        $query  =  $this->createQueryBuilder('despesa')
-            ->andWhere('despesa.descricao = :descricao')
-            ->andWhere('MONTH(despesa.data) = :mes')
-            ->setParameter('descricao', $despesa->getDescricao())
-            ->setParameter('mes', $despesa->getMes());
-        if ($despesa->getId() != null) {
-            $query->andWhere('despesa.id <> :id')
-                ->setParameter('id', $despesa->getId());
-        }
-        return $query->getQuery()
-            ->getResult();
+        $query  =  $this->createQueryBuilder(Metodo::entidade);
+        $searchDescricaoMes = new SearchDescricaoMes(
+            $despesa,
+            $query
+        );
+        return $searchDescricaoMes->busca();
     }
 
-    //    /**
-    //     * @return Despesas[] Returns an array of Despesas objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('d.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function buscaDados(?string $descricao)
+    {
+        $query  =  $this->createQueryBuilder(Metodo::entidade);
+        $buscaDados = new BuscaDados($query, $descricao);
+        return $buscaDados->busca();
+    }
 
-    //    public function findOneBySomeField($value): ?Despesas
-    //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function buscaAnoMes(int $ano, int $mes)
+    {
+        $query  =  $this->createQueryBuilder(Metodo::entidade);
+        $busacaAnoMes = new BusacaAnoMes($ano, $mes, $query);
+        return $busacaAnoMes->busca();
+    }
+
+
+    public function somaValoresAnoMes(int $ano, int $mes)
+    {
+        $query  =  $this->createQueryBuilder(Metodo::entidade);
+        $somaValoresAnoMes = new SomaValoresAnoMes($ano, $mes, $query);
+        return $somaValoresAnoMes->busca();
+    }
 }

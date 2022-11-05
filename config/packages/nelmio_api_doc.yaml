@@ -192,6 +192,12 @@ nelmio_api_doc:
                     description: Lista todas as despesas
                     tags:
                         - Despesas
+                    parameters:
+                        - in: query
+                          name: descricao
+                          schema:
+                              type: string
+                          description: Pesquisa por descrição
                     responses:
                         200:
                             description: Lista de despesas recuperadas com sucesso

@@ -8,4 +8,5 @@ class Metodo
     const get = 'GET';
     const delete = 'DELETE';
     const put = 'PUT';
+    const entidade = 'entidade';
 }

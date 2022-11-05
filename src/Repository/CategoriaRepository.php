@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Helper\Metodo;
 use App\Entity\Categoria;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Categoria>
@@ -39,28 +40,21 @@ class CategoriaRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Categoria[] Returns an array of Categoria objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function somaPorAnoMes($ano, $mes)
+    {
+        $query  =  $this->createQueryBuilder('categoria')
+            ->innerJoin('categoria.despesas', 'despesa')
+            ->select("YEAR(despesa.data) as ano,
+                      MONTH(despesa.data) as mes,
+                      categoria.nome as categoria_nome,
+                      sum(despesa.valor) as valor")
 
-//    public function findOneBySomeField($value): ?Categoria
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+            ->groupBy("ano, mes, categoria_nome")
+            ->andWhere("YEAR(despesa.data) = :ano")
+            ->andWhere("MONTH(despesa.data) = :mes")
+            ->setParameter('ano', $ano)
+            ->setParameter('mes', $mes);
+        return $query->getQuery()
+            ->getArrayResult();
+    }
 }

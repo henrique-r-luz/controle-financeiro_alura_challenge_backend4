@@ -2,10 +2,15 @@
 
 namespace App\Repository;
 
+use App\Helper\Metodo;
 use App\Entity\Receita;
+use App\Repository\helper\BuscaDados;
+use App\Repository\helper\BusacaAnoMes;
 use App\Validacao\DescricaoMesInterface;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\helper\SomaValoresAnoMes;
+use App\Repository\helper\SearchDescricaoMes;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Receita>
@@ -15,7 +20,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Receita[]    findAll()
  * @method Receita[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ReceitaRepository extends ServiceEntityRepository implements DescricaoMesInterface
+class ReceitaRepository extends ServiceEntityRepository implements DescricaoMesInterface, SearchInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -42,52 +47,34 @@ class ReceitaRepository extends ServiceEntityRepository implements DescricaoMesI
 
     public function searchDescricaoMes($receita)
     {
-        $query  =  $this->createQueryBuilder('receita')
-            ->andWhere('receita.descricao = :descricao')
-            ->andWhere('MONTH(receita.data) = :mes')
-            ->setParameter('descricao', $receita->getDescricao())
-            ->setParameter('mes', $receita->getMes());
-        if ($receita->getId() != null) {
-            $query->andWhere('receita.id <> :id')
-                ->setParameter('id', $receita->getId());
-        }
-        return $query->getQuery()
-            ->getResult();
+        $query  =  $this->createQueryBuilder(Metodo::entidade);
+        $searchDescricaoMes = new SearchDescricaoMes(
+            $receita,
+            $query
+        );
+        return $searchDescricaoMes->busca();
     }
 
 
-    public function buscaReceitas(?string $descricao)
+    public function buscaDados(?string $descricao)
     {
-        $query  =  $this->createQueryBuilder('receita');
-        if ($descricao !== null) {
-            $query->andWhere($query->expr()->like('receita.descricao', ':descricao'))
-                ->setParameter('descricao', '%' . $descricao . '%');
-        }
-        return $query->getQuery()->getResult();
+        $query  =  $this->createQueryBuilder(Metodo::entidade);
+        $buscaDados = new BuscaDados($query, $descricao);
+        return $buscaDados->busca();
     }
 
-    //    /**
-    //     * @return Receita[] Returns an array of Receita objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function buscaAnoMes(int $ano, int $mes)
+    {
+        $query  =  $this->createQueryBuilder(Metodo::entidade);
+        $busacaAnoMes = new BusacaAnoMes($ano, $mes, $query);
+        return $busacaAnoMes->busca();
+    }
 
-    //    public function findOneBySomeField($value): ?Receita
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+
+    public function somaValoresAnoMes(int $ano, int $mes)
+    {
+        $query  =  $this->createQueryBuilder(Metodo::entidade);
+        $somaValoresAnoMes = new SomaValoresAnoMes($ano, $mes, $query);
+        return $somaValoresAnoMes->busca();
+    }
 }

@@ -23,7 +23,7 @@ class ListaReceitasController extends AbstractController
             $descricao = $request->query->get('descricao') ?? null;
             /**@var  ReceitaRepository */
             $receitaRepositorio = $doctrine->getRepository(Receita::class);
-            $receitas = $receitaRepositorio->buscaReceitas($descricao);
+            $receitas = $receitaRepositorio->buscaDados($descricao);
             return new JsonResponse($receitas);
         } catch (Throwable $e) {
             return new JsonResponse(["erro" => "Um erro inesperado ocorreu!"], $status = 500);
@@ -36,6 +36,19 @@ class ListaReceitasController extends AbstractController
     {
         try {
             $receitas = $doctrine->getRepository(Receita::class)->findBy(['id' => $id]);
+            return new JsonResponse($receitas);
+        } catch (Throwable $e) {
+            return new JsonResponse(["erro" => "Um erro inesperado ocorreu!"], $status = 500);
+        }
+    }
+
+    #[Route('/receitas/{ano}/{mes}', methods: [Metodo::get])]
+    public function listaAnomeMes(ManagerRegistry $doctrine, int $ano, int $mes)
+    {
+        try {
+            /**@var  ReceitaRepository */
+            $receitaRepositorio = $doctrine->getRepository(Receita::class);
+            $receitas = $receitaRepositorio->buscaAnoMes($ano, $mes);
             return new JsonResponse($receitas);
         } catch (Throwable $e) {
             return new JsonResponse(["erro" => "Um erro inesperado ocorreu!"], $status = 500);
