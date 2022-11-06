@@ -12,20 +12,7 @@ nelmio_api_doc:
                     tags:
                         - Receitas
                     requestBody:
-                        required: true
-                        content:
-                            text/plain:
-                                schema:
-                                    type: object
-
-                                examples:
-                                    dog: # <--- example name
-                                        summary: Exemplo de uma receita
-                                        value:
-                                            # vv Actual payload goes here vv
-                                            descricao: Salário
-                                            valor: 10.58
-                                            data: "2022-10-18"
+                        $ref: "#/components/requestBodies/Receitas"
                     responses:
                         200:
                             description: Receita Criada com sucesso
@@ -67,17 +54,7 @@ nelmio_api_doc:
                                     schema:
                                         type: array
                                         items:
-                                            type: object
-                                            properties:
-                                                id:
-                                                    type: integer
-                                                descricao:
-                                                    type: string
-                                                valor:
-                                                    type: number
-                                                data:
-                                                    type: string
-                                                    format: "date"
+                                            $ref: "#/components/schemas/Receitas"
 
                         500:
                             description: Ocorreu um erro ao tentar inserir A Receita
@@ -103,36 +80,14 @@ nelmio_api_doc:
                             content:
                                 aplicarion/json:
                                     schema:
-                                        type: object
-                                        properties:
-                                            id:
-                                                type: integer
-                                            descricao:
-                                                type: string
-                                            valor:
-                                                type: number
-                                            data:
-                                                type: string
-                                                format: "date"
+                                        $ref: "#/components/schemas/Receitas"
+
                 put:
                     description: "Altera uma receita"
                     tags:
                         - Receitas
                     requestBody:
-                        required: true
-                        content:
-                            text/plain:
-                                schema:
-                                    type: object
-
-                                examples:
-                                    dog: # <--- example name
-                                        summary: Exemplo de uma receita
-                                        value:
-                                            # vv Actual payload goes here vv
-                                            descricao: Salário
-                                            valor: 10.58
-                                            data: "2022-10-18"
+                        $ref: "#/components/requestBodies/Receitas"
                     responses:
                         200:
                             description: Receita Alterada com sucesso
@@ -156,27 +111,28 @@ nelmio_api_doc:
                                         type: object
                                         properties:
                                             receita: { type: int, example: 1 }
+
+            /api/receitas/{ano}/{mes}:
+                get:
+                    description: "Busca receitas do ano e mês"
+                    tags:
+                        - Receitas
+
+                    responses:
+                        200:
+                            description: Receitas de ano e mês
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        $ref: "#/components/schemas/Receitas"
+
             /api/despesas:
                 post:
                     description: Cria uma nova Despesa
                     tags:
                         - Despesas
                     requestBody:
-                        required: true
-                        content:
-                            text/plain:
-                                schema:
-                                    type: object
-
-                                examples:
-                                    dog: # <--- example name
-                                        summary: Exemplo de uma  Despesa
-                                        value:
-                                            # vv Actual payload goes here vv
-                                            descricao: Conta
-                                            valor: 10.58
-                                            data: "2022-10-18"
-                                            categoria: "Outras"
+                        $ref: "#/components/requestBodies/Despesas"
 
                     responses:
                         200:
@@ -206,19 +162,7 @@ nelmio_api_doc:
                                     schema:
                                         type: array
                                         items:
-                                            type: object
-                                            properties:
-                                                id:
-                                                    type: integer
-                                                descricao:
-                                                    type: string
-                                                valor:
-                                                    type: number
-                                                data:
-                                                    type: string
-                                                    format: "date"
-                                                categoria:
-                                                    type: string
+                                            $ref: "#/components/schemas/Despesas"
 
                         500:
                             description: Ocorreu um erro ao tentar inserir a despesa
@@ -245,39 +189,14 @@ nelmio_api_doc:
                             content:
                                 aplicarion/json:
                                     schema:
-                                        type: object
-                                        properties:
-                                            id:
-                                                type: integer
-                                            descricao:
-                                                type: string
-                                            valor:
-                                                type: number
-                                            data:
-                                                type: string
-                                                format: "date"
-                                            categoria:
-                                                type: string
+                                        $ref: "#/components/schemas/Despesas"
+
                 put:
                     description: "Altera uma despesa"
                     tags:
                         - Despesas
                     requestBody:
-                        required: true
-                        content:
-                            text/plain:
-                                schema:
-                                    type: object
-
-                                examples:
-                                    dog: # <--- example name
-                                        summary: Exemplo de uma despesa
-                                        value:
-                                            # vv Actual payload goes here vv
-                                            descricao: conra
-                                            valor: 50.58
-                                            data: "2022-10-18"
-                                            categoria: "Outras"
+                        $ref: "#/components/requestBodies/Despesas"
                     responses:
                         200:
                             description: Despesa Alterada com sucesso
@@ -302,9 +221,121 @@ nelmio_api_doc:
                                         properties:
                                             despesa: { type: int, example: 1 }
 
+            /api/despesas/{ano}/{mes}:
+                get:
+                    description: "Busca despesas do ano e mês"
+                    tags:
+                        - Despesas
+
+                    responses:
+                        200:
+                            description: Despesas de ano e mês
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        $ref: "#/components/schemas/Despesas"
+
+            /api/resumo/{ano}/{mes}:
+                get:
+                    description: "Resumo de despesas e receitas"
+                    tags:
+                        - Resumo
+
+                    responses:
+                        200:
+                            description: Resumo do ano e mês
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        $ref: "#/components/schemas/Resumo"
+
         tags:
             - name: Receitas
             - name: Despesas
+            - name: Resumo
+
+        components:
+            schemas:
+                Despesas:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                        descricao:
+                            type: string
+                        valor:
+                            type: number
+                        data:
+                            type: string
+                            format: "date"
+                        categoria:
+                            type: string
+                Receitas:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                        descricao:
+                            type: string
+                        valor:
+                            type: number
+                        data:
+                            type: string
+                            format: "date"
+
+                Resumo:
+                    type: object
+                    properties:
+                        ano:
+                            type: integer
+                        mes:
+                            type: integer
+                        total_despesas:
+                            type: number
+                        total_receitas:
+                            type: number
+                        categoria:
+                            type: array
+                            items:
+                                type: object
+                                properties:
+                                    nome:
+                                        type: string
+                                    valor:
+                                        type: number
+
+            requestBodies:
+                Receitas:
+                    required: true
+                    content:
+                        text/plain:
+                            schema:
+                                type: object
+
+                            examples:
+                                dog: # <--- example name
+                                    summary: Exemplo de uma receita
+                                    value:
+                                        # vv Actual payload goes here vv
+                                        descricao: Salário
+                                        valor: 10.58
+                                        data: "2022-10-18"
+                Despesas:
+                    required: true
+                    content:
+                        text/plain:
+                            schema:
+                                type: object
+
+                            examples:
+                                dog: # <--- example name
+                                    summary: Exemplo de uma despesa
+                                    value:
+                                        # vv Actual payload goes here vv
+                                        descricao: conra
+                                        valor: 50.58
+                                        data: "2022-10-18"
+                                        categoria: "Outras"
 
     areas: # to filter documented areas
         path_patterns:
