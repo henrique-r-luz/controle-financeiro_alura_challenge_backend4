@@ -26,7 +26,10 @@ class ListaDespesasController extends AbstractController
             $despesas = $despesaRepositorio->buscaDados($descricao);
             return new JsonResponse($despesas);
         } catch (Throwable $e) {
-            return new JsonResponse(["erro" => "Um erro inesperado ocorreu!" . $e->getTraceAsString()], $status = 500);
+            return new JsonResponse(
+                ["erro" => "Um erro inesperado ocorreu!" . $e->getTraceAsString()],
+                $status = 500
+            );
         }
     }
 
