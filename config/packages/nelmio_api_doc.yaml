@@ -249,10 +249,30 @@ nelmio_api_doc:
                                     schema:
                                         $ref: "#/components/schemas/Resumo"
 
+            /api/login_check:
+                post:
+                    summary: Recupera o JWT token para login.
+                    tags:
+                        - Autenticação
+                    requestBody:
+                        description: Cria um novo JWT token
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: "#/components/schemas/Credentials"
+                    responses:
+                        "200":
+                            description: Get JWT token
+                            content:
+                                application/json:
+                                    schema:
+                                        $ref: "#/components/schemas/Token"
+
         tags:
             - name: Receitas
             - name: Despesas
             - name: Resumo
+            - name: Autenticação
 
         components:
             schemas:
@@ -304,6 +324,27 @@ nelmio_api_doc:
                                     valor:
                                         type: number
 
+                Token:
+                    type: object
+                    properties:
+                        token:
+                            type: string
+                            readOnly: true
+
+                Credentials:
+                    type: object
+                    properties:
+                        username:
+                            type: string
+                        password:
+                            type: string
+
+            securitySchemes:
+                bearerAuth:
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT
+
             requestBodies:
                 Receitas:
                     required: true
@@ -337,6 +378,8 @@ nelmio_api_doc:
                                         data: "2022-10-18"
                                         categoria: "Outras"
 
+        security:
+            - bearerAuth: []
     areas: # to filter documented areas
         path_patterns:
             - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
