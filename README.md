@@ -32,7 +32,7 @@ O projeto retrara uma API REST de controle financeiro proposto pelo Challenge Ba
 ## Instalação
 Baixar o projeto no github.
 ~~~
-git clone https://github.com/henrique-r-luz/transacoes_alura_challenge_backend3.git
+git clone https://github.com/henrique-r-luz/controle-financeiro_alura_challenge_backend4.git
 ~~~ 
 Após a conclusão do download entre na pasta transacoes_alura_challenge_backend3 e execute o comando abaixo.
 Esse processo pode levar alguns minutos porque o docker irá criar e configurar
