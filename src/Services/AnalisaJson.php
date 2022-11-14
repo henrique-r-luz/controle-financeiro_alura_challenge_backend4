@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Entity\Despesas;
 use App\Entity\FormEntradaDados;
 use App\Entity\Receita;
+use App\Entity\User;
 use App\Helper\ArulaException;
 use App\Validacao\ValidaJson;
 
@@ -31,6 +32,9 @@ class AnalisaJson
         }
         if ($this->form->entidade instanceof Despesas) {
             return __DIR__ . '/../SchemasJson/despesas_schema.json';
+        }
+        if ($this->form->entidade instanceof User) {
+            return __DIR__ . '/../SchemasJson/user_schema.json';
         }
         throw new ArulaException('Schema não implementado para entidade.');
     }

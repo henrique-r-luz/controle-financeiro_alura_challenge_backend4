@@ -19,7 +19,7 @@ class DespesasServices
     private Despesas $despesas;
     private ManagerRegistry $doctrine;
     private DespesasRepository $repositorio;
-    private VALIDATORINTERFACE $validator;
+    private ValidatorInterface $validator;
 
 
     public function __construct(

@@ -268,14 +268,90 @@ nelmio_api_doc:
                                     schema:
                                         $ref: "#/components/schemas/Token"
 
+            /api/users:
+                get:
+                    description: "Busca um User"
+                    tags:
+                        - User
+                    parameters:
+                        - in: query
+                          name: email
+                          schema:
+                              type: string
+                          description: Pesquisa por email
+                    responses:
+                        200:
+                            description: User
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        $ref: "#/components/schemas/User"
+                post:
+                    description: Cria uma novo user
+                    tags:
+                        - User
+                    requestBody:
+                        $ref: "#/components/requestBodies/User"
+
+                    responses:
+                        200:
+                            description: User Criada com sucesso
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            user: { type: int, example: 1 }
+            /api/users/{id}:
+                delete:
+                    description: "Remove User"
+                    tags:
+                        - User
+                    responses:
+                        200:
+                            description: User Removida com sucesso
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            user: { type: int, example: 1 }
+
+                put:
+                    description: "Altera uma despesa"
+                    tags:
+                        - User
+                    requestBody:
+                        $ref: "#/components/requestBodies/User"
+                    responses:
+                        200:
+                            description: User Alterada com sucesso
+                            content:
+                                aplicarion/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            despesa: { type: int, example: 1 }
+
         tags:
             - name: Receitas
             - name: Despesas
             - name: Resumo
+            - name: User
             - name: Autenticação
 
         components:
             schemas:
+                User:
+                    type: object
+                    properties:
+                        email:
+                            type: string
+                        senha:
+                            type: string
+                        roles:
+                            type: string
+
                 Despesas:
                     type: object
                     properties:
@@ -363,6 +439,21 @@ nelmio_api_doc:
                                         descricao: Salário
                                         valor: 10.58
                                         data: "2022-10-18"
+                User:
+                    required: true
+                    content:
+                        text/plain:
+                            schema:
+                                type: object
+
+                            examples:
+                                dog: # <--- example name
+                                    summary: Exemplo de uma User
+                                    value:
+                                        # vv Actual payload goes here vv
+                                        email: "email@email.com.br"
+                                        senha: "123456"
+                                        roles: "ROLE_USER"
                 Despesas:
                     required: true
                     content:

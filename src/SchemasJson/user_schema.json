@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-09/schema#",
+    "type": "object",
+    "properties": {
+        "email": {
+            "type": "string"
+        },
+        "roles": {
+            "type": "string"
+        },
+        "senha": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "email",
+        "roles",
+        "senha"
+    ],
+    "additionalProperties": false
+}
