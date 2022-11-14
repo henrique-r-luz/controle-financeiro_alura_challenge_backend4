@@ -28,3 +28,26 @@ O projeto retrara uma API REST de controle financeiro proposto pelo Challenge Ba
 - ``swagger``
 - ``PostgresSql``
 - ``API REST``
+
+## Instalação
+Baixar o projeto no github.
+~~~
+git clone https://github.com/henrique-r-luz/transacoes_alura_challenge_backend3.git
+~~~ 
+Após a conclusão do download entre na pasta transacoes_alura_challenge_backend3 e execute o comando abaixo.
+Esse processo pode levar alguns minutos porque o docker irá criar e configurar
+cada container. 
+~~~
+sudo docker-compose up
+~~~ 
+Com os contêineres ligados, acesse o app com o seguinte comando:
+~~~
+docker exec -it <nome do container app criado no seu sistema> bash
+~~~
+Execute o compose para instalar as dependências
+~~~
+composer install
+~~~
+Execute o Migrate para configurar a base de dados 
+~~~
+bin/console doctrine:migrations:migrate
