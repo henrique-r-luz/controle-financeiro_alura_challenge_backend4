@@ -336,7 +336,7 @@ nelmio_api_doc:
         tags:
             - name: Receitas
             - name: Despesas
-            - name: Resumo
+            - name: Resumoferra
             - name: User
             - name: Autenticação
 
