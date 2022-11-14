@@ -52,7 +52,7 @@ Execute o Migrate para configurar a base de dados
 ~~~
 bin/console doctrine:migrations:migrate
 ~~~
-É necessário criar as chaves para RSA para criação do token JTW , para isso execute o seguinte comando:
+É necessário criar as chaves RSA para o token JWT, para isso execute o seguinte comando:
 ~~~
 bin/console lexik:jwt:generate-keypair
 ~~~
