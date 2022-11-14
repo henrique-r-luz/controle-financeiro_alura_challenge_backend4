@@ -62,3 +62,8 @@ localhost:81/api/doc
 ~~~
 
 ![Captura de tela de 2022-11-14 18-14-30](https://user-images.githubusercontent.com/12544898/201766884-8f00f31d-7eba-4185-aaa7-60813a4534e8.png)
+
+## Autor
+
+ [<img src="https://user-images.githubusercontent.com/12544898/174133076-fc3467c3-3908-436f-af3d-2635e4312180.png" width=115><br><sub>Henrique Rodrigues Luz</sub>](https://github.com/henrique-r-luz) 
+
