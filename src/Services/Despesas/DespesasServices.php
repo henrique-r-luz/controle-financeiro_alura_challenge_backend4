@@ -9,6 +9,7 @@ use App\Entity\FormEntradaDados;
 use App\Repository\DespesasRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Validacao\Despesas\ValidaDespesaFachada;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 class DespesasServices
@@ -18,12 +19,16 @@ class DespesasServices
     private Despesas $despesas;
     private ManagerRegistry $doctrine;
     private DespesasRepository $repositorio;
+    private VALIDATORINTERFACE $validator;
 
 
-    public function __construct(ManagerRegistry $doctrine)
-    {
+    public function __construct(
+        ManagerRegistry $doctrine,
+        ValidatorInterface $validator
+    ) {
         $this->despesas = new Despesas();
         $this->doctrine = $doctrine;
+        $this->validator = $validator;
         $this->repositorio = $this->doctrine->getRepository(Despesas::class);
     }
 
@@ -43,7 +48,11 @@ class DespesasServices
     public function save()
     {
 
-        $validaDespesaFachada = new ValidaDespesaFachada($this->repositorio, $this->despesas);
+        $validaDespesaFachada = new ValidaDespesaFachada(
+            $this->repositorio,
+            $this->despesas,
+            $this->validator
+        );
         $validaDespesaFachada->valida();
         $this->repositorio->save($this->despesas, true);
     }

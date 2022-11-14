@@ -8,6 +8,7 @@ use App\Entity\FormEntradaDados;
 use App\Repository\ReceitaRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Validacao\Receita\ValidaReceitaFachada;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 class ReceitaServices
@@ -17,13 +18,17 @@ class ReceitaServices
     private Receita $receita;
     private ManagerRegistry $doctrine;
     private ReceitaRepository $repositorio;
+    private ValidatorInterface $validator;
 
 
-    public function __construct(ManagerRegistry $doctrine)
-    {
+    public function __construct(
+        ManagerRegistry $doctrine,
+        ValidatorInterface $validator
+    ) {
         $this->receita = new Receita();
         $this->doctrine = $doctrine;
         $this->repositorio = $this->doctrine->getRepository(Receita::class);
+        $this->validator = $validator;
     }
 
 
@@ -41,7 +46,11 @@ class ReceitaServices
     public function save()
     {
 
-        $validaReceitaFachada = new ValidaReceitaFachada($this->repositorio, $this->receita);
+        $validaReceitaFachada = new ValidaReceitaFachada(
+            $this->repositorio,
+            $this->receita,
+            $this->validator
+        );
         $validaReceitaFachada->valida();
         $this->repositorio->save($this->receita, true);
     }

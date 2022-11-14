@@ -336,8 +336,10 @@ nelmio_api_doc:
                     properties:
                         username:
                             type: string
+                            example: "controle_financeiro@cf.com.br"
                         password:
                             type: string
+                            example: "admin"
 
             securitySchemes:
                 bearerAuth:

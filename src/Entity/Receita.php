@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReceitaRepository;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ReceitaRepository::class)]
@@ -21,6 +22,7 @@ class Receita implements JsonSerializable
     private ?string $descricao = null;
 
     #[ORM\Column(type: "decimal", precision: 15, scale: 2)]
+    #[Assert\PositiveOrZero]
     private ?float $valor = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]

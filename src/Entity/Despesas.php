@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use JsonSerializable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,6 +20,7 @@ class Despesas implements JsonSerializable
     private ?string $descricao = null;
 
     #[ORM\Column(type: "decimal", precision: 15, scale: 2)]
+    #[Assert\PositiveOrZero]
     private ?float $valor = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
