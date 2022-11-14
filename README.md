@@ -10,9 +10,10 @@ O projeto retrata uma API REST de controle financeiro proposto pelo Challenge Ba
 - CRUD de despesas.
 - Diferenciação de despesas por categoria.
 - CRUD de usuário.
+- Valida json de entrada através de schema.
 - Sistema de autenticação utilizando JWT.
-- Relatorio de resumo de operações do mês, com os seguintes dados(Valor total das receitas no mês; Valor total das despesas no mês; Saldo final no mês; Valor total gasto no mês em cada uma das categorias) .
-- Decumentação da API feita com o swagger.
+- Relatório de resumo de operações do mês, com os seguintes dados(Valor total das receitas no mês; Valor total das despesas no mês; Saldo final no mês; Valor total gasto no mês em cada uma das categorias) .
+- Documentação da API feita com o swagger.
 
 
 ## Pré-requisito
@@ -44,7 +45,7 @@ Com os contêineres ligados, acesse o app com o seguinte comando:
 ~~~
 docker exec -it <nome do container app criado no seu sistema> bash
 ~~~
-Execute o compose para instalar as dependências
+Executa o compose para instalar as dependências
 ~~~
 composer install
 ~~~
