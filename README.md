@@ -4,7 +4,7 @@
 <img src="http://img.shields.io/static/v1?label=STATUS&message=BETA&color=GREEN&style=for-the-badge"/>
 </p>
 
-O projeto retrara uma API REST de controle financeiro proposto pelo Challenge Back-End 4 da Arula. O sistema possui as seguintes funcionalidade :
+O projeto retrata uma API REST de controle financeiro proposto pelo Challenge Back-End 4 da Arula. O sistema possui as seguintes funcionalidade :
 
 - CRUD de despesas.
 - CRUD de despesas.
