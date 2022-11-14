@@ -34,7 +34,7 @@ Baixar o projeto no github.
 ~~~
 git clone https://github.com/henrique-r-luz/controle-financeiro_alura_challenge_backend4.git
 ~~~ 
-Após a conclusão do download entre na pasta transacoes_alura_challenge_backend3 e execute o comando abaixo.
+Após a conclusão do download entre na pasta controle-financeiro_alura_challenge_backend4 e execute o comando abaixo.
 Esse processo pode levar alguns minutos porque o docker irá criar e configurar
 cada container. 
 ~~~
@@ -51,3 +51,9 @@ composer install
 Execute o Migrate para configurar a base de dados 
 ~~~
 bin/console doctrine:migrations:migrate
+~~~
+Para acessar a documentação da API acesse:
+~~~
+localhost:81/api/doc
+~~~
+
