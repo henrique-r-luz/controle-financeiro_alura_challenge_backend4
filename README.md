@@ -8,6 +8,7 @@ O projeto retrara uma API REST de controle financeiro proposto pelo Challenge Ba
 
 - CRUD de despesas.
 - CRUD de despesas.
+- Diferenciação de despesas por categoria.
 - CRUD de usuário.
 - Sistema de autenticação utilizando JWT.
 - Relatorio de resumo de operações do mês, com os seguintes dados(Valor total das receitas no mês; Valor total das despesas no mês; Saldo final no mês; Valor total gasto no mês em cada uma das categorias) .
