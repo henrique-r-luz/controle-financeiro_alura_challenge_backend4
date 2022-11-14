@@ -52,7 +52,7 @@ Execute o Migrate para configurar a base de dados
 ~~~
 bin/console doctrine:migrations:migrate
 ~~~
-Para acessar a documentação da API acesse:
+Para visualizar a documentação da API acesse:
 ~~~
 localhost:81/api/doc
 ~~~
