@@ -61,3 +61,4 @@ Para visualizar a documentação da API acesse:
 localhost:81/api/doc
 ~~~
 
+![Captura de tela de 2022-11-14 18-14-30](https://user-images.githubusercontent.com/12544898/201766884-8f00f31d-7eba-4185-aaa7-60813a4534e8.png)
